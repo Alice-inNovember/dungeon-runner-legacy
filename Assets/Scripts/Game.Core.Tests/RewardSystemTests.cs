@@ -9,7 +9,7 @@ namespace Game.Core.Tests
     ///       (이상해 보여도 고치지 않는다 — 고치는 것은 실습 B, 테스트가 초록이 된 뒤다)
     ///
     /// [제공] 2개는 작성 예시이며 즉시 통과한다.
-    /// [TODO] 6개는 Ignore를 지우고 기대값을 채워 통과시킨다.
+    /// [완료] 6개의 기대값을 원본 동작으로 고정했다.
     ///        테스트 케이스 선정 근거는 이번 주 이론(동등 분할·경계값 분석)이다.
     public class RewardSystemTests
     {
@@ -33,59 +33,59 @@ namespace Game.Core.Tests
             Assert.AreEqual("S", sut.grade);
         }
 
-        // ── [TODO 1] 경계값: t=60 — 경계의 반대쪽. 등급과 보상액은?
-        [Test, Ignore("TODO: 기대값을 채우고 Ignore를 지울 것")]
+        // ── [작성 1] 경계값: t=60 — 경계의 반대쪽. 등급과 보상액은?
+        [Test]
         public void Proc_TimeBoundary_60()
         {
             var sut = new RewardSystem();
             int reward = sut.Proc(t: 60, c: 1, b: 0, isEvent: false, diff: 1);
-            Assert.AreEqual(0 /* TODO */, reward);
-            Assert.AreEqual("?" /* TODO */, sut.grade);
+            Assert.AreEqual(10, reward);
+            Assert.AreEqual("A", sut.grade);
         }
 
-        // ── [TODO 2] 동등 분할: 이벤트 배율 — isEvent=true 클래스
-        [Test, Ignore("TODO")]
+        // ── [작성 2] 동등 분할: 이벤트 배율 — isEvent=true 클래스
+        [Test]
         public void Proc_EventMultiplier()
         {
             var sut = new RewardSystem();
             int reward = sut.Proc(t: 100, c: 4, b: 0, isEvent: true, diff: 1);
-            Assert.AreEqual(0 /* TODO */, reward);
+            Assert.AreEqual(60, reward);
         }
 
-        // ── [TODO 3] 동등 분할: 난이도 3 배율
-        [Test, Ignore("TODO")]
+        // ── [작성 3] 동등 분할: 난이도 3 배율
+        [Test]
         public void Proc_Diff3_Multiplier()
         {
             var sut = new RewardSystem();
             int reward = sut.Proc(t: 100, c: 2, b: 1, isEvent: false, diff: 3);
-            Assert.AreEqual(0 /* TODO */, reward);
+            Assert.AreEqual(105, reward);
         }
 
-        // ── [TODO 4] 경계값: t=120 — C 등급 경계
-        [Test, Ignore("TODO")]
+        // ── [작성 4] 경계값: t=120 — C 등급 경계
+        [Test]
         public void Proc_TimeBoundary_120()
         {
             var sut = new RewardSystem();
             sut.Proc(t: 120, c: 0, b: 0, isEvent: false, diff: 1);
-            Assert.AreEqual("?" /* TODO */, sut.grade);
+            Assert.AreEqual("C", sut.grade);
         }
 
-        // ── [TODO 5] Wallet 보유 한도 경계 — 999,990 + 20 은?
-        [Test, Ignore("TODO")]
+        // ── [작성 5] Wallet 보유 한도 경계 — 999,990 + 20 은?
+        [Test]
         public void Wallet_GoldCap_Boundary()
         {
             var w = new Wallet { gold = 999990 };
             w.GrantStageReward(20);
-            Assert.AreEqual(0 /* TODO */, w.gold);
+            Assert.AreEqual(999999, w.gold);
         }
 
-        // ── [TODO 6] CombatCalc — "slime"과 "boss" 각 한 건 (문자열 분기 고정)
-        [Test, Ignore("TODO")]
+        // ── [작성 6] CombatCalc — "slime"과 "boss" 각 한 건 (문자열 분기 고정)
+        [Test]
         public void CombatCalc_Slime_And_Boss()
         {
             var c = new CombatCalc();
-            Assert.AreEqual(0 /* TODO */, c.Damage("slime", 5));
-            Assert.AreEqual(0 /* TODO */, c.Damage("boss", 10));
+            Assert.AreEqual(4, c.Damage("slime", 5));
+            Assert.AreEqual(7, c.Damage("boss", 10));
         }
     }
 }
