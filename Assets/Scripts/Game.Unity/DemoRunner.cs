@@ -23,9 +23,9 @@ namespace Game.Unity
             GUILayout.Label($"보스 b = {b}");
             b = (int)GUILayout.HorizontalSlider(b, 0, 3);
             isEvent = GUILayout.Toggle(isEvent, " 이벤트 기간");
-            if (GUILayout.Button("정산 (Proc)"))
+            if (GUILayout.Button("정산 (ApplyStageReward)"))
             {
-                int r = reward.Proc(t, c, b, isEvent, diff: 1);
+                int r = reward.ApplyStageReward(t, c, b, isEvent, diff: 1);
                 Debug.Log($"보상 {r}, 등급 {reward.grade}");
             }
             GUILayout.Label($"최근: {reward.lastR} / 등급 {reward.grade}");
